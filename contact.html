@@ -22,11 +22,6 @@
     </header>
 
     <section class="section order-section">
-      <div class="section-title">
-        <h1>Order Here</h1>
-        <p>Get in touch for orders, custom snack bundles, local pickup details, and help from the team behind every box.</p>
-      </div>
-
       <div class="order-card">
         <form class="order-form" action="https://example.com/form-placeholder" method="post">
           <div class="order-header">
@@ -41,23 +36,24 @@
                 Product
                 <select name="product[]">
                   <option>Carne Seca</option>
+                  <option>Michelada Mix</option>
+                </select>
+              </label>
+              <label class="form-field">
+                Flavor
+                <select name="flavor[]">
+                  <option>Original</option>
                   <option>Fuego Carne Seca</option>
                   <option>Red Fuego</option>
                   <option>Blue Fuego</option>
                   <option>Mixed Red &amp; Blue</option>
-                  <option>Michelada Mix</option>
                 </select>
               </label>
               <label class="form-field">
                 Size
                 <select name="size[]">
                   <option>3oz Bag</option>
-                  <option>32oz Mix</option>
                 </select>
-              </label>
-              <label class="form-field">
-                Flavor (if different)
-                <input type="text" name="flavor[]" placeholder="e.g. pineapple mango" />
               </label>
               <label class="form-field">
                 Quantity
@@ -74,23 +70,24 @@
                 Product
                 <select name="product[]">
                   <option>Carne Seca</option>
+                  <option>Michelada Mix</option>
+                </select>
+              </label>
+              <label class="form-field">
+                Flavor
+                <select name="flavor[]">
+                  <option>Original</option>
                   <option>Fuego Carne Seca</option>
                   <option>Red Fuego</option>
                   <option>Blue Fuego</option>
                   <option>Mixed Red &amp; Blue</option>
-                  <option>Michelada Mix</option>
                 </select>
               </label>
               <label class="form-field">
                 Size
                 <select name="size[]">
                   <option>3oz Bag</option>
-                  <option>32oz Mix</option>
                 </select>
-              </label>
-              <label class="form-field">
-                Flavor (if different)
-                <input type="text" name="flavor[]" placeholder="e.g. strawberry watermelon" />
               </label>
               <label class="form-field">
                 Quantity
@@ -191,6 +188,49 @@
     const itemTemplate = document.getElementById('item-template');
     const addItemButton = document.getElementById('add-item');
 
+    const flavorOptions = {
+      'Carne Seca': [
+        'Original',
+        'Fuego Carne Seca',
+        'Red Fuego',
+        'Blue Fuego',
+        'Mixed Red & Blue'
+      ],
+      'Michelada Mix': [
+        'Pineapple Mango',
+        'Strawberry Watermelon',
+        'Cucumber'
+      ]
+    };
+
+    const sizeOptions = {
+      'Carne Seca': ['3oz Bag'],
+      'Michelada Mix': ['32oz Mix']
+    };
+
+    function fillSelectOptions(select, values) {
+      select.innerHTML = values.map(value => `<option>${value}</option>`).join('');
+    }
+
+    function updateItemCard(card) {
+      const productSelect = card.querySelector('select[name="product[]"]');
+      const flavorSelect = card.querySelector('select[name="flavor[]"]');
+      const sizeSelect = card.querySelector('select[name="size[]"]');
+
+      if (!productSelect || !flavorSelect || !sizeSelect) return;
+
+      const product = productSelect.value;
+      fillSelectOptions(flavorSelect, flavorOptions[product] || []);
+      fillSelectOptions(sizeSelect, sizeOptions[product] || []);
+    }
+
+    function initItemCard(card) {
+      const productSelect = card.querySelector('select[name="product[]"]');
+      if (!productSelect) return;
+      productSelect.addEventListener('change', () => updateItemCard(card));
+      updateItemCard(card);
+    }
+
     function updateItemLabels() {
       orderItems.querySelectorAll('.item-card').forEach((card, index) => {
         const number = card.querySelector('.item-number');
@@ -198,9 +238,13 @@
       });
     }
 
+    orderItems.querySelectorAll('.item-card').forEach(initItemCard);
+
     addItemButton.addEventListener('click', () => {
       const clone = itemTemplate.content.cloneNode(true);
       orderItems.appendChild(clone);
+      const newCard = orderItems.lastElementChild;
+      if (newCard) initItemCard(newCard);
       updateItemLabels();
     });
 

@@ -413,12 +413,15 @@ header.scrolled::after {
 }
 
 .order-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid transparent;
-  border-image: linear-gradient(135deg, #f4c740, #e6468f, #4ff0d2, #8f4ad5) 1;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 32px;
   padding: 28px;
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.24);
+}
+
+.order-header {
+  text-align: center;
 }
 
 .order-header h2 {
@@ -469,6 +472,18 @@ header.scrolled::after {
   background-position: calc(100% - 18px) calc(50% + 1px), calc(100% - 14px) calc(50% + 1px);
   background-size: 8px 8px, 8px 8px;
   background-repeat: no-repeat;
+}
+
+.form-field select:focus,
+.form-field input:focus,
+.form-field textarea:focus {
+  background: rgba(255, 255, 255, 0.12);
+  color: #e5e5e5;
+}
+
+.form-field option {
+  background: #120b23;
+  color: #e5e5e5;
 }
 
 
