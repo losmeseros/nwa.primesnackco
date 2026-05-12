@@ -123,14 +123,35 @@ nav {
 }
 
 nav a {
-  color: var(--silver);
+  color: rgba(238, 231, 244, 0.78);
+  opacity: 0.88;
   font-size: 0.95rem;
   font-weight: 600;
-  transition: color 0.2s ease;
+  transition: color 0.22s ease, opacity 0.22s ease, transform 0.22s ease;
 }
 
-nav a:hover {
-  color: var(--turquoise);
+nav a:hover,
+nav a:focus {
+  color: #fff;
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+header.scrolled nav a {
+  color: rgba(238, 231, 244, 0.72);
+}
+
+header.scrolled nav a:hover,
+header.scrolled nav a:focus {
+  color: #fff;
+}
+
+header.scrolled {
+  background: rgba(10, 3, 13, 0.98);
+}
+
+header.scrolled::after {
+  background: linear-gradient(90deg, rgba(244, 199, 64, 0.3), rgba(230, 70, 143, 0.72), rgba(79, 240, 210, 0.3));
 }
 
 
@@ -596,25 +617,12 @@ nav a:hover {
   align-items: baseline;
   gap: 14px;
   margin-bottom: 28px;
-  padding-bottom: 18px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .section-title h2 {
   margin: 0;
   font-size: clamp(2rem, 2.4vw, 2.6rem);
   position: relative;
-}
-
-.section-title h2::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -8px;
-  width: 72px;
-  height: 3px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, #f4c740, #e6468f, #4ff0d2, #8f4ad5);
 }
 
 .section-title p {
