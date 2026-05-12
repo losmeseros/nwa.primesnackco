@@ -21,11 +21,115 @@
       </nav>
     </header>
 
-    <section class="section">
+    <section class="section order-section">
       <div class="section-title">
         <h1>Contact Prime Snack Co</h1>
         <p>Get in touch for orders, custom snack bundles, local pickup details, and help from the team behind every box.</p>
       </div>
+
+      <div class="order-card">
+        <form class="order-form" action="https://example.com/form-placeholder" method="post">
+          <div class="order-header">
+            <h2>Order form</h2>
+            <p>Begin your ticket-style order. Add items, choose size and flavor, then send your contact and shipping details.</p>
+          </div>
+
+          <div class="order-items" id="order-items">
+            <div class="item-card">
+              <div class="item-heading"><span class="item-number">Item 1</span></div>
+              <label class="form-field">
+                Product
+                <select name="product[]">
+                  <option>Carne Seca</option>
+                  <option>Fuego Carne Seca</option>
+                  <option>Red Fuego</option>
+                  <option>Blue Fuego</option>
+                  <option>Mixed Red &amp; Blue</option>
+                  <option>Michelada Mix</option>
+                </select>
+              </label>
+              <label class="form-field">
+                Size
+                <select name="size[]">
+                  <option>3oz Bag</option>
+                  <option>32oz Mix</option>
+                </select>
+              </label>
+              <label class="form-field">
+                Flavor (if different)
+                <input type="text" name="flavor[]" placeholder="e.g. pineapple mango" />
+              </label>
+              <label class="form-field">
+                Quantity
+                <input type="number" name="quantity[]" min="1" value="1" />
+              </label>
+              <button type="button" class="btn btn-secondary remove-item">Remove item</button>
+            </div>
+          </div>
+
+          <template id="item-template">
+            <div class="item-card">
+              <div class="item-heading"><span class="item-number">Item</span></div>
+              <label class="form-field">
+                Product
+                <select name="product[]">
+                  <option>Carne Seca</option>
+                  <option>Fuego Carne Seca</option>
+                  <option>Red Fuego</option>
+                  <option>Blue Fuego</option>
+                  <option>Mixed Red &amp; Blue</option>
+                  <option>Michelada Mix</option>
+                </select>
+              </label>
+              <label class="form-field">
+                Size
+                <select name="size[]">
+                  <option>3oz Bag</option>
+                  <option>32oz Mix</option>
+                </select>
+              </label>
+              <label class="form-field">
+                Flavor (if different)
+                <input type="text" name="flavor[]" placeholder="e.g. strawberry watermelon" />
+              </label>
+              <label class="form-field">
+                Quantity
+                <input type="number" name="quantity[]" min="1" value="1" />
+              </label>
+              <button type="button" class="btn btn-secondary remove-item">Remove item</button>
+            </div>
+          </template>
+
+          <div class="order-actions">
+            <button type="button" class="btn btn-secondary" id="add-item">Add another item</button>
+          </div>
+
+          <div class="order-details">
+            <div class="form-field full-width">
+              <label>Phone number
+                <input type="tel" name="phone" placeholder="(479) 555-0192" />
+              </label>
+            </div>
+            <div class="form-field full-width">
+              <label>Email address
+                <input type="email" name="email" placeholder="hello@primesnackco.com" />
+              </label>
+            </div>
+            <div class="form-field full-width">
+              <label>Shipping address
+                <textarea name="address" rows="4" placeholder="Street, city, state, zip"></textarea>
+              </label>
+            </div>
+          </div>
+
+          <div class="order-actions order-submit-row">
+            <button type="submit" class="btn btn-primary">Submit order placeholder</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="section contact-info-section">
       <div class="contact-image">
         <img src="photos/family.jpeg" alt="Prime Snack Co family" />
       </div>
@@ -87,5 +191,35 @@
       </div>
     </footer>
   </div>
+  <script>
+    const orderItems = document.getElementById('order-items');
+    const itemTemplate = document.getElementById('item-template');
+    const addItemButton = document.getElementById('add-item');
+
+    function updateItemLabels() {
+      orderItems.querySelectorAll('.item-card').forEach((card, index) => {
+        const number = card.querySelector('.item-number');
+        if (number) number.textContent = `Item ${index + 1}`;
+      });
+    }
+
+    addItemButton.addEventListener('click', () => {
+      const clone = itemTemplate.content.cloneNode(true);
+      orderItems.appendChild(clone);
+      updateItemLabels();
+    });
+
+    orderItems.addEventListener('click', (event) => {
+      if (event.target.matches('.remove-item')) {
+        const card = event.target.closest('.item-card');
+        if (card) {
+          card.remove();
+          updateItemLabels();
+        }
+      }
+    });
+
+    updateItemLabels();
+  </script>
 </body>
 </html>
